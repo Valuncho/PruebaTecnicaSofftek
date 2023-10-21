@@ -9,6 +9,12 @@ namespace PruebaTecnicaSofftek
             // Add services to the container.
             builder.Services.AddAuthorization();
 
+            // conexion a la base de datos
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer("name=DefaultConnection");
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

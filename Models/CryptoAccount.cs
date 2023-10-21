@@ -1,7 +1,13 @@
-﻿namespace PruebaTecnicaSofftek.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PruebaTecnicaSofftek.Models
 {
+    [Table("cryptoAccount")]
     public class CryptoAccount
     {
+        [Required]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid AddressUUID { get; set; }
     }
 }
