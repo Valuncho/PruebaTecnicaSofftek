@@ -6,6 +6,10 @@ namespace PruebaTecnicaSofftek.Models
     [Table("bankAccount")]
     public class BankAccount 
     {
+        [Key]
+        [Required]
+        [Column(TypeName = "INT")]
+        public int BankAccountId { get; set; }
         [Required]
         [Column(TypeName = "INT")]
         public int CBU { get; set; }

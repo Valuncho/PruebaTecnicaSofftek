@@ -5,6 +5,7 @@ namespace PruebaTecnicaSofftek.DTOs
 {
     public class BankAccountDto
     {
+        public int bankAccountId { get; set; }
         public int CBU { get; set; }
         public string Alias { get; set; }
         public int AccountNumber { get; set; }
