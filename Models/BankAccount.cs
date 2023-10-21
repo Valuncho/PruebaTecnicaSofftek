@@ -34,7 +34,7 @@ namespace PruebaTecnicaSofftek.Models
         public enum BankAccountType
         {
             ARSAccount = 1,
-            USDAccount
+            USDAccount 
         }
     }
 }
