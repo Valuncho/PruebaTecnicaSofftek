@@ -9,5 +9,9 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [Column(TypeName = "uniqueidentifier")]
         public Guid AddressUUID { get; set; }
+        [Required]
+        [ForeignKey("AccountId")]
+        public int AccountId { get; set; }
+        public Account Account { get; set; }
     }
 }
