@@ -19,7 +19,7 @@ namespace PruebaTecnicaSofftek.Repositories
                 BankAccount.Alias = updateBankAccount.Alias;
                 BankAccount.CBU = updateBankAccount.CBU;
                 BankAccount.Type = updateBankAccount.Type;
-                
+                 
                 _context.BanckAccounts.Update(BankAccount);
                 await _context.SaveChangesAsync();
                 return true;

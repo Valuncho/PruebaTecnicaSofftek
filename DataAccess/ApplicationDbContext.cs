@@ -16,7 +16,9 @@ namespace PruebaTecnicaSofftek.DataAccess
         {
             var seeders = new List<IEntitySeeder>
             {
-                new BankAccountSeeder(),
+                new AccountSeeder(),
+                new CustomerSeeder(),
+                new BankAccountSeeder()
             };
 
 

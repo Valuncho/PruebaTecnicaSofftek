@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PruebaTecnicaSofftek.DataAccess;
+
 namespace PruebaTecnicaSofftek
 {
     public class Program

@@ -10,6 +10,15 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [Column(TypeName = "INT")]
         public int BankAccountId { get; set; }
+
+        [Required]
+        [ForeignKey("AccountId")]
+        public int AccountNumber { get; set; }
+
+        [Required]
+        [ForeignKey("CustomerId")]
+        public int CustomerId { get; set; }
+
         [Required]
         [Column(TypeName = "INT")]
         public int CBU { get; set; }
@@ -20,21 +29,12 @@ namespace PruebaTecnicaSofftek.Models
 
         [Required]
         [Column(TypeName = "INT")]
-        public int AccountNumber { get; set; }
-
-        [Required]
-        [Column(TypeName = "INT")]
         public BankAccountType Type { get; set; }
-
-        [Required]
-        [ForeignKey("AccountId")]
-        public int AccountId { get; set; }
-        public Account Account { get; set; }
 
         public enum BankAccountType
         {
             ARSAccount = 1,
-            USDAccount 
+            USDAccount = 2
         }
     }
 }

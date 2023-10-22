@@ -19,8 +19,5 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [Column(TypeName = "VARCHAR(100)")]
         public string Password { get; set; }
-        [Required]
-        [Column(TypeName = "")]
-        public List<BankAccount> BankAccounts { get; set; }
     }
 }

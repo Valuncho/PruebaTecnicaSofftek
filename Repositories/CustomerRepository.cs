@@ -19,7 +19,6 @@ namespace PruebaTecnicaSofftek.Repositories
 
             Customer.CustomerName = updateCustomer.CustomerName;
             Customer.Email = updateCustomer.Email;
-            Customer.BankAccounts = updateCustomer.BankAccounts;
             Customer.Password = updateCustomer.Password;
             _context.Customers.Update(Customer);
             await _context.SaveChangesAsync();
