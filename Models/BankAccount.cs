@@ -10,15 +10,22 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [Column(TypeName = "INT")]
         public int BankAccountId { get; set; }
+        //Esto es nuevo
 
         [Required]
-        [ForeignKey("AccountId")]
-        public int AccountNumber { get; set; }
-
+        public int AccountId { get; set; } // Propiedad de navegación hacia Account
         [Required]
-        [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; } // Propiedad de navegación hacia Account
 
+        [ForeignKey("CustomerId")]
+        public Customer Customer { get; set; }
+        // esto es nuevo
+
+        [Required]
+        [Column(TypeName = "INT")]
+        public int AccountNumber { get; set; }
         [Required]
         [Column(TypeName = "INT")]
         public int CBU { get; set; }

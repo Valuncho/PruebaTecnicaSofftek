@@ -12,8 +12,8 @@ using PruebaTecnicaSofftek.DataAccess;
 namespace PruebaTecnicaSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231022022522_creatingDb")]
-    partial class creatingDb
+    [Migration("20231022180628_createdTest")]
+    partial class createdTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,8 +60,11 @@ namespace PruebaTecnicaSofftek.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankAccountId"), 1L, 1);
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("INT");
+
                     b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("INT");
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -71,12 +74,16 @@ namespace PruebaTecnicaSofftek.Migrations
                         .HasColumnType("INT");
 
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                        .HasColumnType("INT");
 
                     b.Property<int>("Type")
                         .HasColumnType("INT");
 
                     b.HasKey("BankAccountId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("bankAccount");
 
@@ -84,6 +91,7 @@ namespace PruebaTecnicaSofftek.Migrations
                         new
                         {
                             BankAccountId = 1,
+                            AccountId = 1,
                             AccountNumber = 1,
                             Alias = "valuncho.jefe",
                             CBU = 111,
@@ -93,6 +101,7 @@ namespace PruebaTecnicaSofftek.Migrations
                         new
                         {
                             BankAccountId = 2,
+                            AccountId = 1,
                             AccountNumber = 2,
                             Alias = "valuncho.miniJefe",
                             CBU = 123,
@@ -179,6 +188,25 @@ namespace PruebaTecnicaSofftek.Migrations
                     b.HasKey("transferId");
 
                     b.ToTable("transfer");
+                });
+
+            modelBuilder.Entity("PruebaTecnicaSofftek.Models.BankAccount", b =>
+                {
+                    b.HasOne("PruebaTecnicaSofftek.Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PruebaTecnicaSofftek.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }

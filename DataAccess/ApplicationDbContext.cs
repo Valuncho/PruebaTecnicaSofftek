@@ -14,6 +14,17 @@ namespace PruebaTecnicaSofftek.DataAccess
         public DbSet<Customer> Customers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configuración de relaciones y propiedades de navegación
+            modelBuilder.Entity<BankAccount>()
+                .HasOne(b => b.Account)
+                .WithMany()
+                .HasForeignKey(b => b.AccountId);
+
+            modelBuilder.Entity<BankAccount>()
+                .HasOne(b => b.Customer)
+                .WithMany()
+                .HasForeignKey(b => b.CustomerId);
+
             var seeders = new List<IEntitySeeder>
             {
                 new AccountSeeder(),

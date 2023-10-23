@@ -13,20 +13,22 @@ namespace PruebaTecnicaSofftek.DataAccess.DataBaseSeeding
                 new BankAccount
                 {
                     BankAccountId = 1,
+                    AccountId = 1,
+                    CustomerId = 1,
                     CBU = 111,
                     Alias = "valuncho.jefe",
                     AccountNumber = 1,
                     Type = BankAccount.BankAccountType.ARSAccount,
-                    CustomerId = 1,
                 },
                 new BankAccount
                 {
                     BankAccountId = 2,
+                    AccountId = 1,
+                    CustomerId = 1,
                     CBU = 123,
                     Alias = "valuncho.miniJefe",
                     AccountNumber = 2,
                     Type = BankAccount.BankAccountType.USDAccount,
-                    CustomerId = 1,
                 }
            );
         }
