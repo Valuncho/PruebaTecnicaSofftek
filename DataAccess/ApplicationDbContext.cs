@@ -9,7 +9,8 @@ namespace PruebaTecnicaSofftek.DataAccess
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<CryptoAccount> CryptoAccounts { get; set; }
-        public DbSet<BankAccount> BanckAccounts { get; set; }
+        // error solucionado
+        public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

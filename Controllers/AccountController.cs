@@ -12,7 +12,7 @@ namespace PruebaTecnicaSofftek.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        private readonly CurrencyInformationService _currencyInfoService;
         public AccountController(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -132,6 +132,45 @@ namespace PruebaTecnicaSofftek.Controllers
             {
                 return BadRequest("Fondos insuficientes");
             }
+
+            account.Balance -= amount;
+            await _unitOfWork.AccountRepository.Update(account);
+
+            return Ok(account.Balance);
+        }
+
+        /*
+         Para poder comprar cripto
+         de Pesos, a Dolares y ultimamente a Crypto.
+         chequear qué tipo de cuenta es (En pesos o en dolares)
+         Convertirlo a lo que sea necesario
+         y enviarlo a la cuenta en cryptos
+         */
+        [HttpPost("CompraCrypto/{AccountId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<decimal>> CompraCrypto(int AccountId, [FromBody] decimal amount)
+        {
+            var account = await _unitOfWork.AccountRepository.GetById(AccountId);
+            if (account == null)
+            {
+                return BadRequest("Cuenta no encontrada");
+            }
+            var bankAccount = await _unitOfWork.BankAccountRepository.GetById(AccountId);
+            if (account.Balance < amount)
+            {
+                return BadRequest("Fondos insuficientes");
+            }
+            if((int)bankAccount.Type == 1)
+            {
+                var dolarPrice = _currencyInfoService.getDolarInformation();
+                return Ok(dolarPrice);
+                //account.Balance = account.Balance / _currencyInfoService.getDolarValue();
+                //account.Balance /= _currencyDataService.getDolarValue();
+            }
+            
+
+            
 
             account.Balance -= amount;
             await _unitOfWork.AccountRepository.Update(account);

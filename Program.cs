@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PruebaTecnicaSofftek.DataAccess;
+using PruebaTecnicaSofftek.Models;
 using PruebaTecnicaSofftek.Services;
 using System.Reflection;
 
@@ -14,7 +15,7 @@ namespace PruebaTecnicaSofftek
 
             // Add services to the container.
             builder.Services.AddAuthorization();
-
+            builder.Services.AddScoped<CurrencyInformationService>();
             // esto fue un problema
             builder.Services.AddControllers();
 
