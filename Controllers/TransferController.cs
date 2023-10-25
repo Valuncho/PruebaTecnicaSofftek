@@ -49,15 +49,18 @@ namespace PruebaTecnicaSofftek.Controllers
 
             // Realizar la transferencia (restar del origen y sumar al destino)
             //Esto falta corregir ------------------------------------------
-            originAccount.Amount -= transfer.Amount;
-            destinationAccount.Amount += transfer.Amount;
+            if ((originAccount.Balance -= transfer.Amount) > 0)
+            {
+                destinationAccount.Balance += transfer.Amount;
+                // Guardar las actualizaciones en las cuentas y la transferencia
+                await _unitOfWork.AccountRepository.Update(originAccount);
+                await _unitOfWork.AccountRepository.Update(destinationAccount);
+                await _unitOfWork.TransferRepository.Insert(transfer);
 
-            // Guardar las actualizaciones en las cuentas y la transferencia
-             await _unitOfWork.TransferRepository.Update(originAccount);
-             await _unitOfWork.TransferRepository.Update(destinationAccount);            
-             await _unitOfWork.TransferRepository.Insert(transfer);
-
-            return StatusCode(StatusCodes.Status201Created, _mapper.Map<TransferDto>(transfer));
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<TransferDto>(transfer));
+            }
+            else { return BadRequest(); }
+            
         }
     }
 }

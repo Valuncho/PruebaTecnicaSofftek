@@ -58,16 +58,16 @@ namespace PruebaTecnicaSofftek.Repositories
         }
         
         // Metodo para buscar cuentas por el campo Origin
-        public async Task<Transfer> GetByOrigin(int origin)
+        public async Task<Account> GetByOrigin(int originAccountId)
         {
-            var account = await _context.Transfers.FirstOrDefaultAsync(a => a.Origin == origin);
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == originAccountId);
             return account;
         }
 
         // Metodo para buscar cuentas por el campo Destination en la controlladora
-        public async Task<Transfer> GetByDestination(int destination)
+        public async Task<Account> GetByDestination(int destinationAccountId)
         {
-            var account = await _context.Transfers.FirstOrDefaultAsync(a => a.Destination == destination);
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == destinationAccountId);
             return account;
         }
         public async Task<Account> GetById(int accountId)
