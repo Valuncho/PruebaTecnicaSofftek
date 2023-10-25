@@ -9,7 +9,7 @@ namespace PruebaTecnicaSofftek.Models
         [Key]
         [Required]
         [Column(TypeName = "INT")]
-        public int transferId { get; set; }
+        public int TransferId { get; set; }
         [Required]
         [Column(TypeName = "INT")]
         public int Origin { get; set; }

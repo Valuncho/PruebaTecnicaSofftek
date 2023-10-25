@@ -4,7 +4,7 @@ namespace PruebaTecnicaSofftek.DTOs
 {
     public class TransferDto
     {
-        public int transferId { get; set; }
+        public int TransferId { get; set; }
         public Account Origin { get; set; }
         public Account Destination { get; set; }
         public string TransferType { get; set; }

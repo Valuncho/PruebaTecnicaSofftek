@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PruebaTecnicaSofftek.DataAccess;
+using PruebaTecnicaSofftek.DTOs;
+using PruebaTecnicaSofftek.Helpers;
 using PruebaTecnicaSofftek.Models;
 using PruebaTecnicaSofftek.Repositories.Interfaces;
 
@@ -56,6 +58,11 @@ namespace PruebaTecnicaSofftek.Repositories
             {
                 return false;
             }
+        }
+        public async Task<Customer?> AuthenticateCredentials(AutenticacionDto dto)
+        {
+            return await _context.Customers.SingleOrDefaultAsync
+                (x => x.Email == dto.Email && x.Password == PasswordEncryptHelper.EncryptPassword(dto.Password, dto.Email));
         }
     }
 }
