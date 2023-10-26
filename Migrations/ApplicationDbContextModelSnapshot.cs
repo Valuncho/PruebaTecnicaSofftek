@@ -41,12 +41,12 @@ namespace PruebaTecnicaSofftek.Migrations
                         new
                         {
                             AccountId = 1,
-                            Balance = 400m
+                            Balance = 400000m
                         },
                         new
                         {
                             AccountId = 2,
-                            Balance = 0m
+                            Balance = 300m
                         });
                 });
 
@@ -118,14 +118,14 @@ namespace PruebaTecnicaSofftek.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("CryptoBalance")
-                        .HasColumnType("DECIMAL");
+                        .HasColumnType("DECIMAL(38,18)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("AddressUUID");
 
-                    b.ToTable("cryptoAccount");
+                    b.ToTable("CryptoAccount");
                 });
 
             modelBuilder.Entity("PruebaTecnicaSofftek.Models.Customer", b =>

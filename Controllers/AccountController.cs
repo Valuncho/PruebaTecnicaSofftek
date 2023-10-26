@@ -148,9 +148,12 @@ namespace PruebaTecnicaSofftek.Controllers
         [HttpPost("CompraCrypto/{AccountId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<decimal>> CompraCrypto(int AccountId, [FromBody] decimal amount, [FromServices] CurrencyInformationService _currencyInformation, [FromQuery] CryptoAccountDto cryptoDto)
+        public async Task<ActionResult<decimal>> CompraCrypto(int AccountId, [FromBody] decimal amount, [FromServices] CurrencyInformationService _currencyInformation)
         {
-            CryptoAccount cryptoAccount = _mapper.Map<CryptoAccount>(cryptoDto);
+            // Esto nose si esta bien pero no encontre otra manera de hacerlo
+             CryptoAccountDto cryptoDto = new CryptoAccountDto();
+             CryptoAccount cryptoAccount = _mapper.Map<CryptoAccount>(cryptoDto);
+            //var cryptoAccount = await _unitOfWork.CryptoAccountRepository.GetById(AccountId);
             var account = await _unitOfWork.AccountRepository.GetById(AccountId);
             if (account == null)
             {
@@ -166,7 +169,8 @@ namespace PruebaTecnicaSofftek.Controllers
                 account.Balance -= amount;
                 // Hace la division del balance con el Precio del Dolar y lo mismo con Crypto
                 var convertedArsToUsd = amount / _currencyInformation.getDolarInformation();
-                cryptoAccount.CryptoBalance = convertedArsToUsd / _currencyInformation.getCryptoInformation();
+                var convertedBTC = convertedArsToUsd / _currencyInformation.getCryptoInformation();
+                cryptoAccount.CryptoBalance = convertedBTC;
             }
             else if ((int)bankAccount.Type == 2)
             {                

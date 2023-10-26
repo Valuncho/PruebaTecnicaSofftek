@@ -17,5 +17,12 @@ namespace PruebaTecnicaSofftek.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        // Esto es nuevo
+        public async Task<CryptoAccount> GetById(int accountId)
+        {
+
+            var cryptoAccount = await _context.CryptoAccounts.FirstOrDefaultAsync(x => x.AccountId == accountId);
+            return cryptoAccount;
+        }
     }
 }

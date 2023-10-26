@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PruebaTecnicaSofftek.Migrations
 {
-    public partial class createdTest : Migration
+    public partial class technicalTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,16 +23,17 @@ namespace PruebaTecnicaSofftek.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "cryptoAccount",
+                name: "CryptoAccount",
                 columns: table => new
                 {
                     AddressUUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false)
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    CryptoBalance = table.Column<decimal>(type: "DECIMAL(38,18)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cryptoAccount", x => x.AddressUUID);
+                    table.PrimaryKey("PK_CryptoAccount", x => x.AddressUUID);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,7 +55,7 @@ namespace PruebaTecnicaSofftek.Migrations
                 name: "transfer",
                 columns: table => new
                 {
-                    transferId = table.Column<int>(type: "INT", nullable: false)
+                    TransferId = table.Column<int>(type: "INT", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Origin = table.Column<int>(type: "INT", nullable: false),
                     Destination = table.Column<int>(type: "INT", nullable: false),
@@ -64,7 +65,7 @@ namespace PruebaTecnicaSofftek.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transfer", x => x.transferId);
+                    table.PrimaryKey("PK_transfer", x => x.TransferId);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,17 +101,20 @@ namespace PruebaTecnicaSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "account",
                 columns: new[] { "AccountId", "Balance" },
-                values: new object[] { 1, 400m });
-
-            migrationBuilder.InsertData(
-                table: "account",
-                columns: new[] { "AccountId", "Balance" },
-                values: new object[] { 2, 0m });
+                values: new object[,]
+                {
+                    { 1, 400000m },
+                    { 2, 300m }
+                });
 
             migrationBuilder.InsertData(
                 table: "customer",
                 columns: new[] { "CustomerId", "CustomerName", "Email", "Password" },
-                values: new object[] { 1, "Test", "test@gmail.com", "password" });
+                values: new object[,]
+                {
+                    { 1, "Test", "test@gmail.com", "d670b690880474251d314c4d83cde47415a610b89e560401cf3419c011be6745" },
+                    { 2, "esteEsBueno", "testing@gmail.com", "cf1dbe457df8a129c3c764035499d6730341c127ff4d545ac79f75644a70d7be" }
+                });
 
             migrationBuilder.InsertData(
                 table: "bankAccount",
@@ -139,7 +143,7 @@ namespace PruebaTecnicaSofftek.Migrations
                 name: "bankAccount");
 
             migrationBuilder.DropTable(
-                name: "cryptoAccount");
+                name: "CryptoAccount");
 
             migrationBuilder.DropTable(
                 name: "transfer");
