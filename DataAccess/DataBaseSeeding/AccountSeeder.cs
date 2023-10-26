@@ -12,13 +12,13 @@ namespace PruebaTecnicaSofftek.DataAccess.DataBaseSeeding
                 new Account
                 {
                     AccountId = 1,
-                    Balance = 400,
+                    Balance = 400000,
 
                 },
                 new Account
                 {
                     AccountId = 2,
-                    Balance = 0,
+                    Balance = 300,
                 }
            );
         }

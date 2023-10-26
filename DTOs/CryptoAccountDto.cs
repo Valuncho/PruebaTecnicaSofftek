@@ -6,5 +6,6 @@ namespace PruebaTecnicaSofftek.DTOs
     {
         public Guid AddressUUID { get; set; }
         public int AccountId { get; set; }
+        public decimal CryptoBalance { get; set; }
     }
 }

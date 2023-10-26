@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PruebaTecnicaSofftek.Models
 {
-    [Table("cryptoAccount")]
+    [Table("CryptoAccount")]
     public class CryptoAccount
     {
         [Key]
@@ -16,5 +16,8 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [ForeignKey("AccountId")]
         public int AccountId { get; set; }
+        [Required]
+        [Column(TypeName = "DECIMAL(38,18)")]
+        public decimal CryptoBalance { get; set; }
     }
 }

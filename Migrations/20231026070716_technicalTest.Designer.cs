@@ -12,8 +12,8 @@ using PruebaTecnicaSofftek.DataAccess;
 namespace PruebaTecnicaSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231022180628_createdTest")]
-    partial class createdTest
+    [Migration("20231026070716_technicalTest")]
+    partial class technicalTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,12 +43,12 @@ namespace PruebaTecnicaSofftek.Migrations
                         new
                         {
                             AccountId = 1,
-                            Balance = 400m
+                            Balance = 400000m
                         },
                         new
                         {
                             AccountId = 2,
-                            Balance = 0m
+                            Balance = 300m
                         });
                 });
 
@@ -119,12 +119,15 @@ namespace PruebaTecnicaSofftek.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("CryptoBalance")
+                        .HasColumnType("DECIMAL(38,18)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("AddressUUID");
 
-                    b.ToTable("cryptoAccount");
+                    b.ToTable("CryptoAccount");
                 });
 
             modelBuilder.Entity("PruebaTecnicaSofftek.Models.Customer", b =>
@@ -157,17 +160,24 @@ namespace PruebaTecnicaSofftek.Migrations
                             CustomerId = 1,
                             CustomerName = "Test",
                             Email = "test@gmail.com",
-                            Password = "password"
+                            Password = "d670b690880474251d314c4d83cde47415a610b89e560401cf3419c011be6745"
+                        },
+                        new
+                        {
+                            CustomerId = 2,
+                            CustomerName = "esteEsBueno",
+                            Email = "testing@gmail.com",
+                            Password = "cf1dbe457df8a129c3c764035499d6730341c127ff4d545ac79f75644a70d7be"
                         });
                 });
 
             modelBuilder.Entity("PruebaTecnicaSofftek.Models.Transfer", b =>
                 {
-                    b.Property<int>("transferId")
+                    b.Property<int>("TransferId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INT");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("transferId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransferId"), 1L, 1);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("DECIMAL");
@@ -185,7 +195,7 @@ namespace PruebaTecnicaSofftek.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(100)");
 
-                    b.HasKey("transferId");
+                    b.HasKey("TransferId");
 
                     b.ToTable("transfer");
                 });

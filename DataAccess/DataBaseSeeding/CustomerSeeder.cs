@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PruebaTecnicaSofftek.Helpers;
 using PruebaTecnicaSofftek.Models;
 
 namespace PruebaTecnicaSofftek.DataAccess.DataBaseSeeding
@@ -14,7 +15,14 @@ namespace PruebaTecnicaSofftek.DataAccess.DataBaseSeeding
                     CustomerId = 1,
                     CustomerName = "Test",
                     Email = "test@gmail.com",
-                    Password = "password",                  
+                    Password = PasswordEncryptHelper.EncryptPassword("1234", "test@gmail.com")            
+                },
+                new Customer 
+                {
+                    CustomerId = 2,
+                    CustomerName = "esteEsBueno",
+                    Email = "testing@gmail.com",
+                    Password = PasswordEncryptHelper.EncryptPassword("1234", "testing@gmail.com")
                 }
            );
         }

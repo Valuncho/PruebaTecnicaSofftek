@@ -18,6 +18,7 @@ namespace PruebaTecnicaSofftek.Repositories
 
             Account.Balance = updateAccount.Balance;
             
+            
             _context.Accounts.Update(Account);
             await _context.SaveChangesAsync();
             return true;
@@ -54,6 +55,26 @@ namespace PruebaTecnicaSofftek.Repositories
             {
                 return false;
             }
+        }
+        
+        // Metodo para buscar cuentas por el campo Origin
+        public async Task<Account> GetByOrigin(int originAccountId)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == originAccountId);
+            return account;
+        }
+
+        // Metodo para buscar cuentas por el campo Destination en la controlladora
+        public async Task<Account> GetByDestination(int destinationAccountId)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == destinationAccountId);
+            return account;
+        }
+        public async Task<Account> GetById(int accountId)
+        {
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(t => t.AccountId == accountId);
+            return account;
         }
     }
 }

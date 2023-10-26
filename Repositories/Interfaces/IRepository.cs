@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using PruebaTecnicaSofftek.Models;
+using System.Linq.Expressions;
 
 namespace PruebaTecnicaSofftek.Repositories.Interfaces
 {
