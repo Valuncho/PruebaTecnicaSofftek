@@ -15,7 +15,10 @@ namespace PruebaTecnicaSofftek
 
             // Add services to the container.
             builder.Services.AddAuthorization();
+
             builder.Services.AddScoped<CurrencyInformationService>();
+            // esto hace que haya 1 sola instancia de currency information creo
+            builder.Services.AddSingleton<CurrencyInformationService>();
             // esto fue un problema
             builder.Services.AddControllers();
 

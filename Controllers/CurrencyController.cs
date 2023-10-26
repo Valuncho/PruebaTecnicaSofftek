@@ -13,10 +13,12 @@ namespace PruebaTecnicaSofftek.Controllers
     public class CurrencyController : ControllerBase
     {
         private readonly HttpClient _client;
+        private readonly CurrencyInformationService _currencyInformation;
 
-        public CurrencyController()
+        public CurrencyController(CurrencyInformationService currencyInformation)
         {
             _client = new HttpClient();
+            _currencyInformation = currencyInformation;
         }
 
         [HttpGet]
@@ -24,23 +26,7 @@ namespace PruebaTecnicaSofftek.Controllers
         {
             try
             {
-                /* Realiza una solicitud GET a la API de DolarAPI
-                HttpResponseMessage responseUSD = await _client.GetAsync("https://dolarapi.com/v1/dolares/blue");
-                HttpResponseMessage responseBTC = await _client.GetAsync("https://criptoya.com/api/banexcoin/btc/usd/0.1");
-
-                if (responseUSD.IsSuccessStatusCode && responseBTC.IsSuccessStatusCode)
-                {
-                    // Lee y procesa la respuesta como JSON
-                    string USDData = await responseUSD.Content.ReadAsStringAsync();
-                    var dolarSplitted = USDData.Split(',');
-                    var dolarValue = dolarSplitted[4];
-                    decimal dolarPrice = 
-                    //Console.Write(dolarPrice);
-                    string BTCData = await responseBTC.Content.ReadAsStringAsync();
-                    currencyInformation.SetDolarInformation(USDData);
-                    currencyInformation.SetCryptoInformation(BTCData);
-                    return Ok(USDData +"\n"+ BTCData);
-                }*/
+                //Realiza una solicitud GET a la API de DolarAPI
                 HttpResponseMessage responseUSD = await _client.GetAsync("https://dolarapi.com/v1/dolares/blue");
                 HttpResponseMessage responseBTC = await _client.GetAsync("https://criptoya.com/api/banexcoin/btc/usd/0.1");
 
@@ -59,9 +45,8 @@ namespace PruebaTecnicaSofftek.Controllers
                         decimal bitcoinPrice = btcDocument.RootElement.GetProperty("bid").GetDecimal();
 
                         // Puedes utilizar dolarPrice y bitcoinPrice según tus necesidades
-                        currencyInformation.SetDolarInformation(USDData);
-                        currencyInformation.SetCryptoInformation(BTCData);
-
+                        currencyInformation.SetDolarInformation(dolarPrice);
+                        currencyInformation.SetCryptoInformation(bitcoinPrice);
                         return Ok($"Valor del dólar: {dolarPrice}\nValor de Bitcoin: {bitcoinPrice}");
                     }
                 }

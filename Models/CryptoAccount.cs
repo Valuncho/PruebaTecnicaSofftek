@@ -16,5 +16,8 @@ namespace PruebaTecnicaSofftek.Models
         [Required]
         [ForeignKey("AccountId")]
         public int AccountId { get; set; }
+        [Required]
+        [Column(TypeName = "DECIMAL")]
+        public decimal CryptoBalance { get; set; }
     }
 }

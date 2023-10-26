@@ -2,23 +2,23 @@
 {
     public class CurrencyInformationService
     {
-        private string dolarInformation;
-        private string cryptoInformation;
+        private decimal dolarInformation;
+        private decimal cryptoInformation;
 
-        public void SetDolarInformation(string dolarInfo) 
+        public void SetDolarInformation(decimal dolarInfo) 
         {
             dolarInformation = dolarInfo;
         }
-        public void SetCryptoInformation(string cryptoInfo)
+        public void SetCryptoInformation(decimal cryptoInfo)
         {
             cryptoInformation = cryptoInfo;
         }
 
-        public string getDolarInformation() 
+        public decimal getDolarInformation() 
         {
             return dolarInformation;
         }
-        public string getCryptoInformation()
+        public decimal getCryptoInformation()
         {
             return cryptoInformation;
         }

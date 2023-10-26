@@ -12,7 +12,6 @@ namespace PruebaTecnicaSofftek.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly CurrencyInformationService _currencyInfoService;
         public AccountController(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -149,8 +148,9 @@ namespace PruebaTecnicaSofftek.Controllers
         [HttpPost("CompraCrypto/{AccountId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<decimal>> CompraCrypto(int AccountId, [FromBody] decimal amount)
+        public async Task<ActionResult<decimal>> CompraCrypto(int AccountId, [FromBody] decimal amount, [FromServices] CurrencyInformationService _currencyInformation, [FromQuery] CryptoAccountDto cryptoDto)
         {
+            CryptoAccount cryptoAccount = _mapper.Map<CryptoAccount>(cryptoDto);
             var account = await _unitOfWork.AccountRepository.GetById(AccountId);
             if (account == null)
             {
@@ -161,21 +161,26 @@ namespace PruebaTecnicaSofftek.Controllers
             {
                 return BadRequest("Fondos insuficientes");
             }
-            if((int)bankAccount.Type == 1)
+            if ((int)bankAccount.Type == 1)
             {
-                var dolarPrice = _currencyInfoService.getDolarInformation();
-                return Ok(dolarPrice);
-                //account.Balance = account.Balance / _currencyInfoService.getDolarValue();
-                //account.Balance /= _currencyDataService.getDolarValue();
+                account.Balance -= amount;
+                // Hace la division del balance con el Precio del Dolar y lo mismo con Crypto
+                var convertedArsToUsd = amount / _currencyInformation.getDolarInformation();
+                cryptoAccount.CryptoBalance = convertedArsToUsd / _currencyInformation.getCryptoInformation();
             }
-            
+            else if ((int)bankAccount.Type == 2)
+            {                
+                account.Balance -= amount;                
+                // Hace la division del balance con el Precio de Crypto
+                cryptoAccount.CryptoBalance = amount / _currencyInformation.getCryptoInformation();
+            }
+            cryptoAccount.AccountId = account.AccountId;
+            cryptoAccount.CustomerId = bankAccount.CustomerId;
 
-            
-
-            account.Balance -= amount;
+            await _unitOfWork.CryptoAccountRepository.Insert(cryptoAccount);
             await _unitOfWork.AccountRepository.Update(account);
 
-            return Ok(account.Balance);
+            return Ok("Se compró BTC exitosamente, nuevo saldo: " + cryptoAccount.CryptoBalance);
         }
     }
 }
