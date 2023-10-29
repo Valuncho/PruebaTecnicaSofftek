@@ -16,11 +16,16 @@ namespace PruebaTecnicaSofftek.Controllers
         private readonly IMapper _mapper;
 
         public TransferController(IMapper mapper, IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
+        {   // proporciona acceso a varios repositorios y operaciones relacionadas con la base de datos
+            _unitOfWork = unitOfWork;            
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Crea una transferencia entre cuentas.
+        /// </summary>
+        /// <param name="transferDto">Trae los atributos de la clase TransferController.</param>
+        /// <returns>Devuelve un 201 con las cuentas actualizadas y una transferencia creada en la db.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -31,24 +36,22 @@ namespace PruebaTecnicaSofftek.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            // mapea un objeto (transfer dto) a Transfer y el resultado se asigna a transfer
             var transfer = _mapper.Map<Transfer>(transferDto);
+            // Esto falto corregir
             transfer.TransferType = "Transferencia";
+            // Asigna la fecha 
             transfer.Date = DateTime.Now;
 
             // Verificar que las cuentas de origen y destino existan 
-            //var transfer = await _unitOfWork.TransferRepository.GetById(transferId);
-
             var originAccount = await _unitOfWork.AccountRepository.GetByOrigin(transfer.Origin);
             var destinationAccount = await _unitOfWork.AccountRepository.GetByDestination(transfer.Destination);
-
+            
             if (originAccount == null || destinationAccount == null)
             {
                 return BadRequest("Cuentas de origen o destino no válidas");
-            }
-
+            }            
             // Realizar la transferencia (restar del origen y sumar al destino)
-            //Esto falta corregir ------------------------------------------
             if ((originAccount.Balance -= transfer.Amount) > 0)
             {
                 destinationAccount.Balance += transfer.Amount;
@@ -59,8 +62,10 @@ namespace PruebaTecnicaSofftek.Controllers
 
                 return StatusCode(StatusCodes.Status201Created, _mapper.Map<TransferDto>(transfer));
             }
-            else { return BadRequest(); }
-            
+            else 
+            { 
+                return BadRequest(); 
+            }            
         }
     }
 }
