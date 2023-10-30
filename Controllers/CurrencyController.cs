@@ -21,13 +21,20 @@ namespace PruebaTecnicaSofftek.Controllers
             _currencyInformation = currencyInformation;
         }
 
+        /// <summary>
+        /// Obtiene el valor de USD y BTC.
+        /// </summary>
+        /// <param name="currencyInformation">Recibe los atributos del modelo de CurrencyInformationService.</param>
+        /// <returns>Devuelve un Ok con los valores de dolar y Bitcoin obtenidos de la api.</returns>
         [HttpGet]
+        // FromService lo que hace es instanciar los datos y lo inyecta en el parametro
         public async Task<IActionResult> GetCurrencyData([FromServices] CurrencyInformationService currencyInformation)
         {
             try
             {
                 //Realiza una solicitud GET a la API de DolarAPI
                 HttpResponseMessage responseUSD = await _client.GetAsync("https://dolarapi.com/v1/dolares/blue");
+                //Realiza una solicitud GET a la API de DolarAPI
                 HttpResponseMessage responseBTC = await _client.GetAsync("https://criptoya.com/api/banexcoin/btc/usd/0.1");
 
                 if (responseUSD.IsSuccessStatusCode && responseBTC.IsSuccessStatusCode)
